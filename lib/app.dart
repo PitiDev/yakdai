@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         '/createCus': (_) => new CreateCus(),
         '/listCus': (_) => new listCus(),
         '/createOrder': (_) => new createOrder(),
-        '/listOrder': (_) => new listOrder()
+        '/listOrder': (_) => new listOrder(),
       },
 
       home: LoginPage(),

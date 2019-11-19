@@ -13,7 +13,6 @@ class listOrder extends StatefulWidget {
 }
 
 class _listOrderState extends State<listOrder> {
-
   TextEditingController search = TextEditingController();
 
   @override
@@ -36,7 +35,7 @@ class _listOrderState extends State<listOrder> {
               Container(
                 margin: EdgeInsets.only(left: 20),
                 child: InkWell(
-                  onTap: (){
+                  onTap: () {
                     Navigator.pushNamed(context, '/listCus');
                   },
                   child: Row(
@@ -54,55 +53,14 @@ class _listOrderState extends State<listOrder> {
                     Navigator.pushNamed(context, '/createOrder');
                   },
                   child: Row(
-                    children: <Widget>[Icon(Icons.border_color), Text('ເພີ່ມລາຍການສັ່ງເຄື່ອງ')],
+                    children: <Widget>[
+                      Icon(Icons.border_color),
+                      Text('ເພີ່ມລາຍການສັ່ງເຄື່ອງ')
+                    ],
                   ),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(right: 20),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/createCus');
-                  },
-                  child: Row(
-                    children: <Widget>[Icon(Icons.add_box), Text('ເພີ່ມລູກຄ້າ')],
-                  ),
-                ),
-              )
             ],
-          ),
-          Container(
-            margin: EdgeInsets.all(10),
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              elevation: 3.0,
-              child: Center(
-                child: Padding(
-                  //Add padding around textfield
-                  padding: EdgeInsets.symmetric(horizontal: 5.0),
-                  child: TextField(
-                    controller: search,
-                    decoration: InputDecoration(
-                      hintText: "ຄົ້ນຫາ",
-                      border: InputBorder.none,
-                      icon: CircleAvatar(
-                        backgroundColor: Color(0xFF1565c0),
-                        child: Icon(
-                          Icons.search,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Text('ລາຍການສັ່ງທັງໝົດ'),
-          SizedBox(
-            height: 20,
           ),
           DataList(),
         ],

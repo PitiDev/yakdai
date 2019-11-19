@@ -64,38 +64,7 @@ class _ListProState extends State<ListPro> {
               )
             ],
           ),
-          Container(
-            margin: EdgeInsets.all(10),
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              elevation: 3.0,
-              child: Center(
-                child: Padding(
-                  //Add padding around textfield
-                  padding: EdgeInsets.symmetric(horizontal: 5.0),
-                  child: TextField(
-                    controller: search,
-                    decoration: InputDecoration(
-                      hintText: "ຄົ້ນຫາ",
-                      border: InputBorder.none,
-                      icon: CircleAvatar(
-                        backgroundColor: Color(0xFF1565c0),
-                        child: Icon(
-                          Icons.search,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
+
           DataList(),
         ],
       ),

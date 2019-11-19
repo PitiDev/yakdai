@@ -14,6 +14,7 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:image/image.dart' as Img;
 import 'dart:math' as Math;
+import 'package:app_yakdai/screen/product/list.dart';
 
 class CreatePro extends StatefulWidget {
   final String title = "Upload Image Demo";
@@ -93,18 +94,20 @@ class _CreateProState extends State<CreatePro> {
     request.files.add(multipartFile);
 
     var response = await request.send();
+    final respStr = await response.stream.bytesToString();
 
     if (response.statusCode == 200) {
-      print("Image Uploaded");
+      print("Success Uploaded ================");
     } else {
-      print("Upload Failed");
+      print("Upload Failed ========***********===");
     }
 
-    print(response);
+    print('Data Res ===  ${response}');
 
     response.stream.transform(utf8.decoder).listen((value) {
       print(value);
     });
+
   }
 
   @override
@@ -187,8 +190,13 @@ class _CreateProState extends State<CreatePro> {
           );
 
           new Future.delayed(new Duration(seconds: 3), () {
-            Navigator.pop(context); //pop dialog
-            Navigator.pushNamed(context, '/listPro');
+//            Navigator.pop(context); //pop dialog
+//            Navigator.pushNamed(context, '/listPro');
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => ListPro()),
+              ModalRoute.withName("/listPro"),
+            );
           });
         }),
         tooltip: 'Save',

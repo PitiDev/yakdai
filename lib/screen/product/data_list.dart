@@ -10,7 +10,10 @@ class DataList extends StatefulWidget {
 
 class _DataListState extends State<DataList> {
   Future<List> _listPro() async {
-    final response = await http.get("http://127.0.0.1:8000/api/list-pro");
+    final response =
+        await http.post("http://127.0.0.1:8000/api/search-pro", body: {
+      "name": search.text,
+    });
 //    print("Response status: ${response.statusCode}");
 //    print("Response body: ${response.body}");
 
@@ -35,12 +38,46 @@ class _DataListState extends State<DataList> {
               );
       },
     );
+    
+  return Column(
+    children: <Widget>[
 
-    return Container(
-      height: 600,
-      margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
-      child: data_listPro,
-    );
+      Container(
+        margin: EdgeInsets.all(10),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          elevation: 3.0,
+          child: Center(
+            child: Padding(
+              //Add padding around textfield
+              padding: EdgeInsets.symmetric(horizontal: 5.0),
+              child: TextField(
+                controller: search,
+                decoration: InputDecoration(
+                  hintText: "ຄົ້ນຫາ",
+                  border: InputBorder.none,
+                  icon: CircleAvatar(
+                    backgroundColor: Color(0xFF1565c0),
+                    child: Icon(
+                      Icons.search,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+      Container(
+        height: 600,
+        margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+        child: data_listPro,
+      ),
+    ],
+  );
   }
 }
 
@@ -68,7 +105,8 @@ class ServiceHome extends StatelessWidget {
                 style: TextStyle(
                     color: Colors.black54, fontWeight: FontWeight.bold),
               ),
-              subtitle: Text('haha'),
+              subtitle: Text(
+                  '${list[i]['type_pro']} | ລາຄາຂາຍ: ${list[i]['price_sale']} KIP'),
               trailing: Icon(Icons.keyboard_arrow_right),
               onTap: () {
                 print('ສັ່ງເຄື່ອງໃຫ້ລູກຄ້າ');
