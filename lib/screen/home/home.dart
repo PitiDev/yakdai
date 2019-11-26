@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:app_yakdai/style/theme.dart' as Theme;
 import 'package:app_yakdai/screen/home/menu.dart';
+import 'package:app_yakdai/screen/home/report_menu.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -17,9 +18,10 @@ class _HomePageState extends State<HomePage> {
         length: 2,
         child: Scaffold(
           appBar: GradientAppBar(
+            centerTitle: true,
             elevation: 0.0,
-            backgroundColorStart: Color(0xFF1565c0),
-            backgroundColorEnd: Color(0xFF66a6ff),
+            backgroundColorStart: Color(0xFF29b6f6),
+            backgroundColorEnd: Color(0xFF03a9f4),
             automaticallyImplyLeading: false,
             bottom: TabBar(
               // labelPadding: EdgeInsets.all(15),
@@ -43,7 +45,7 @@ class _HomePageState extends State<HomePage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Icon(
-                              Icons.view_list,
+                              Icons.view_agenda,
                               size: 26.0,
                             ),
                             Text(
@@ -90,7 +92,7 @@ class _HomePageState extends State<HomePage> {
           body: TabBarView(
             children: [
               Menu(),
-              Icon(Icons.directions_transit),
+              ReportMenu()
             ],
           ),
           floatingActionButton: FloatingActionButton(

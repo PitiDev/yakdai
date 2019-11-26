@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
-import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
-import 'package:image_picker/image_picker.dart';
-import 'package:http/http.dart' as http;
-import 'package:app_yakdai/screen/product/data_list.dart';
+
+import 'package:app_yakdai/screen/order/data_list.dart';
 
 class listOrder extends StatefulWidget {
   @override
@@ -13,15 +9,14 @@ class listOrder extends StatefulWidget {
 }
 
 class _listOrderState extends State<listOrder> {
-  TextEditingController search = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GradientAppBar(
+        centerTitle: true,
         elevation: 1.0,
-        backgroundColorStart: Color(0xFF1565c0),
-        backgroundColorEnd: Color(0xFF66a6ff),
+        backgroundColorStart: Color(0xFF29b6f6),
+        backgroundColorEnd: Color(0xFF03a9f4),
         title: Text('ລາຍການສັ່ງສີນຄ້າ'),
       ),
       body: Column(
@@ -62,7 +57,7 @@ class _listOrderState extends State<listOrder> {
               ),
             ],
           ),
-          DataList(),
+          OrderList(),
         ],
       ),
     );

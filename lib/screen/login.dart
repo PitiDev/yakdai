@@ -9,6 +9,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:app_yakdai/service/api.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -32,7 +33,7 @@ class _LoginPageState extends State<LoginPage>
   String user, status, token;
 
   Future<List> _login() async {
-    final response = await http.post("http://127.0.0.1:8000/api/login", body: {
+    final response = await http.post(Url_login, body: {
       "name": loginUserController.text,
       "password": loginPasswordController.text,
     });
@@ -84,15 +85,15 @@ class _LoginPageState extends State<LoginPage>
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(top: 70.0),
-                  child: new Image.network(
-                    'https://firebasestorage.googleapis.com/v0/b/app-yakdai.appspot.com/o/icon%2FGroup%20787.png?alt=media&token=c3faf8a6-a816-46fc-af14-8c08aced5150',
+                  child: new Image.asset(
+                    'images/logo.png',
                     width: 150,
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 0.0),
-                  child: new Image.network(
-                    'https://firebasestorage.googleapis.com/v0/b/app-yakdai.appspot.com/o/icon%2Flogoyakdai.png?alt=media&token=81e3f667-b92c-457d-af6a-77d97b3aad6f',
+                  child: new Image.asset(
+                    'images/logoyakdai.png',
                     width: 150,
                   ),
                 ),
@@ -100,7 +101,10 @@ class _LoginPageState extends State<LoginPage>
                   child: Text('ຂົນສົ່ງ ລາວ-ຈີນ'),
                 ),
                 Center(
-                  child: Text(msg,style: TextStyle(color: Colors.redAccent),),
+                  child: Text(
+                    msg,
+                    style: TextStyle(color: Colors.redAccent),
+                  ),
                 ),
                 Expanded(
                   flex: 2,

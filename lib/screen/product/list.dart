@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
-import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
-import 'package:image_picker/image_picker.dart';
-import 'package:http/http.dart' as http;
 import 'package:app_yakdai/screen/product/data_list.dart';
 
 class ListPro extends StatefulWidget {
@@ -13,23 +8,15 @@ class ListPro extends StatefulWidget {
 }
 
 class _ListProState extends State<ListPro> {
-  Future<List> _listPro() async {
-    final response = await http.get("http://127.0.0.1:8000/api/list-pro");
-    print("Response status: ${response.statusCode}");
-    print("Response body: ${response.body}");
-
-    return json.decode(response.body);
-  }
-
-  TextEditingController search = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GradientAppBar(
+        centerTitle: true,
         elevation: 1.0,
-        backgroundColorStart: Color(0xFF1565c0),
-        backgroundColorEnd: Color(0xFF66a6ff),
+        backgroundColorStart: Color(0xFF29b6f6),
+        backgroundColorEnd: Color(0xFF03a9f4),
         title: Text('Products'),
       ),
       body: Column(
@@ -58,7 +45,7 @@ class _ListProState extends State<ListPro> {
                     Navigator.pushNamed(context, '/createPro');
                   },
                   child: Row(
-                    children: <Widget>[Icon(Icons.add), Text('ເພີ່ມສີນຄ້າ')],
+                    children: <Widget>[Icon(Icons.add), Text('ເພີ່ມສີນຄ້າ',style: TextStyle(fontWeight: FontWeight.bold),)],
                   ),
                 ),
               )

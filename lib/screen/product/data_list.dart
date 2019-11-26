@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:app_yakdai/service/api.dart';
+import 'package:app_yakdai/screen/product/detail_product.dart';
 
 class DataList extends StatefulWidget {
   @override
@@ -10,12 +12,9 @@ class DataList extends StatefulWidget {
 
 class _DataListState extends State<DataList> {
   Future<List> _listPro() async {
-    final response =
-        await http.post("http://127.0.0.1:8000/api/search-pro", body: {
+    final response = await http.post(Url_listProduct, body: {
       "name": search.text,
     });
-//    print("Response status: ${response.statusCode}");
-//    print("Response body: ${response.body}");
 
     return json.decode(response.body);
   }
@@ -38,31 +37,31 @@ class _DataListState extends State<DataList> {
               );
       },
     );
-    
-  return Column(
-    children: <Widget>[
 
-      Container(
-        margin: EdgeInsets.all(10),
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
-          ),
-          elevation: 3.0,
-          child: Center(
-            child: Padding(
-              //Add padding around textfield
-              padding: EdgeInsets.symmetric(horizontal: 5.0),
-              child: TextField(
-                controller: search,
-                decoration: InputDecoration(
-                  hintText: "ຄົ້ນຫາ",
-                  border: InputBorder.none,
-                  icon: CircleAvatar(
-                    backgroundColor: Color(0xFF1565c0),
-                    child: Icon(
-                      Icons.search,
-                      color: Colors.white,
+    return Column(
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.all(10),
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            elevation: 3.0,
+            child: Center(
+              child: Padding(
+                //Add padding around textfield
+                padding: EdgeInsets.symmetric(horizontal: 5.0),
+                child: TextField(
+                  controller: search,
+                  decoration: InputDecoration(
+                    hintText: "ຄົ້ນຫາ",
+                    border: InputBorder.none,
+                    icon: CircleAvatar(
+                      backgroundColor: Color(0xFF29b6f6),
+                      child: Icon(
+                        Icons.search,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
@@ -70,14 +69,13 @@ class _DataListState extends State<DataList> {
             ),
           ),
         ),
-      ),
-      Container(
-        height: 600,
-        margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
-        child: data_listPro,
-      ),
-    ],
-  );
+        Container(
+          height: 525,
+          margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+          child: data_listPro,
+        ),
+      ],
+    );
   }
 }
 
@@ -93,23 +91,44 @@ class ServiceHome extends StatelessWidget {
       itemCount: list == null ? 0 : list.length,
       itemBuilder: (context, i) {
         final image = list[i]['image'];
+        int number = list[i]['number'];
         return Column(
           children: <Widget>[
             ListTile(
-              leading: Image.network(
-                'http://localhost/yakdai_api/public/$image',
-                width: 55,
+              leading: CircleAvatar(
+                radius: 25.0,
+                backgroundImage: NetworkImage('${Url_image}$image'),
+                backgroundColor: Colors.transparent,
               ),
               title: Text(
-                list[i]['name'],
+                list[i]['pro_name'],
                 style: TextStyle(
                     color: Colors.black54, fontWeight: FontWeight.bold),
               ),
               subtitle: Text(
-                  '${list[i]['type_pro']} | ລາຄາຂາຍ: ${list[i]['price_sale']} KIP'),
-              trailing: Icon(Icons.keyboard_arrow_right),
+                  'Id: ${list[i]['id']} | ລາຄາຂາຍ: ${list[i]['price_sale']} KIP'),
+              trailing: Column(
+                children: <Widget>[
+                  Text('ຈໍານວນ'),
+                  Text('$number')
+                ],
+              ),
               onTap: () {
-                print('ສັ່ງເຄື່ອງໃຫ້ລູກຄ້າ');
+                Navigator.of(context).push(
+                  new MaterialPageRoute(
+                    //Passing Data to Detail
+                    builder: (context) => new DetailProduct(
+                      pro_name: list[i]['pro_name'],
+                      type_pro: list[i]['type_pro'],
+                      id: list[i]['id'],
+                      image: list[i]['image'],
+                      price_old: list[i]['price_old'],
+                      price_sale: list[i]['price_sale'],
+                      number: list[i]['number'],
+                      create_at: list[i]['create_at'],
+                    ),
+                  ),
+                );
               },
               selected: true,
             ),

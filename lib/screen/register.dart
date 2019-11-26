@@ -9,6 +9,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:app_yakdai/screen/login.dart';
+import 'package:app_yakdai/service/api.dart';
 
 class Register extends StatefulWidget {
   Register({Key key}) : super(key: key);
@@ -34,7 +35,7 @@ class _RegisterState extends State<Register>
   String status, token;
 
   Future<List> _register() async {
-    final response = await http.post("http://127.0.0.1:8000/api/add-user", body: {
+    final response = await http.post(Url_register, body: {
       "name": user.text,
       "address": address.text,
       "phone": phone.text,
@@ -87,10 +88,8 @@ class _RegisterState extends State<Register>
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.only(top: 70.0),
-                  child: new Image.network(
-                    'https://firebasestorage.googleapis.com/v0/b/app-yakdai.appspot.com/o/icon%2FGroup%20787.png?alt=media&token=c3faf8a6-a816-46fc-af14-8c08aced5150',
-                    width: 100,
+                  padding: EdgeInsets.only(top: 50.0),
+                  child: new Image.asset('images/logo.png',width: 100,
                   ),
                 ),
 //              SizedBox(height: 100,),
@@ -102,7 +101,10 @@ class _RegisterState extends State<Register>
                   ),
                 ),
                 Center(
-                  child: Text('ລົງທະບຽນເຂົ້າໃຊ້ງານ',style: TextStyle(fontSize: 20),),
+                  child: Text(
+                    'ລົງທະບຽນເຂົ້າໃຊ້ງານ',
+                    style: TextStyle(fontSize: 20),
+                  ),
                 ),
                 Expanded(
                   flex: 2,
@@ -125,8 +127,8 @@ class _RegisterState extends State<Register>
 
   Widget _buildSignIn(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 23.0),
-      child: Column(
+      padding: EdgeInsets.only(top: 10.0),
+      child: ListView(
         children: <Widget>[
           Stack(
             alignment: Alignment.topCenter,
@@ -244,13 +246,11 @@ class _RegisterState extends State<Register>
                           ),
                         ),
                       ),
-
                       Container(
                         width: 250.0,
                         height: 1.0,
                         color: Colors.grey[400],
                       ),
-
                       Padding(
                         padding: EdgeInsets.only(
                             top: 20.0, bottom: 5.0, left: 25.0, right: 25.0),
@@ -324,7 +324,9 @@ class _RegisterState extends State<Register>
               ),
             ],
           ),
-
+          SizedBox(
+            height: 100,
+          )
         ],
       ),
     );

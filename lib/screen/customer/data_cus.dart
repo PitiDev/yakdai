@@ -11,12 +11,9 @@ class DataCus extends StatefulWidget {
 
 class _DataCusState extends State<DataCus> {
   Future<List> _listPro() async {
-    final response =
-        await http.post(Url_Customer, body: {
+    final response = await http.post(Url_Customer, body: {
       "name": search.text,
     });
-//    print("Response status: ${response.statusCode}");
-//    print("Response body: ${response.body}");
 
     return json.decode(response.body);
   }
@@ -43,7 +40,7 @@ class _DataCusState extends State<DataCus> {
     return Column(
       children: <Widget>[
         Container(
-          margin: EdgeInsets.all(10),
+          margin: EdgeInsets.only(right: 10,left: 10,bottom: 10),
           child: Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0),
@@ -56,10 +53,10 @@ class _DataCusState extends State<DataCus> {
                 child: TextField(
                   controller: search,
                   decoration: InputDecoration(
-                    hintText: "ຄົ້ນຫາ",
+                    hintText: "ຄົ້ນຫາ, ຊື່ ຫຼື ເບີໂທ",
                     border: InputBorder.none,
                     icon: CircleAvatar(
-                      backgroundColor: Color(0xFF1565c0),
+                      backgroundColor: Color(0xFF29b6f6),
                       child: Icon(
                         Icons.search,
                         color: Colors.white,
@@ -85,14 +82,14 @@ class _DataCusState extends State<DataCus> {
                   Navigator.pushNamed(context, '/createCus');
                 },
                 child: Row(
-                  children: <Widget>[Icon(Icons.add_box), Text('ເພີ່ມລູກຄ້າ')],
+                  children: <Widget>[Icon(Icons.add_box), Text('ເພີ່ມລູກຄ້າ',style: TextStyle(fontWeight: FontWeight.bold),)],
                 ),
               ),
             )
           ],
         ),
         Container(
-          height: 600,
+          height: 525,
           margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
           child: data_listPro,
         )
@@ -112,14 +109,14 @@ class ServiceHome extends StatelessWidget {
 //      scrollDirection: Axis.horizontal,
       itemCount: list == null ? 0 : list.length,
       itemBuilder: (context, i) {
-        final image = list[i]['image'];
+        final image = list[i]['cus_image'];
         return Column(
           children: <Widget>[
             ListTile(
               leading: CircleAvatar(
-                radius: 30.0,
+                radius: 25.0,
                 backgroundImage:
-                    NetworkImage('http://localhost/yakdai_api/public/$image'),
+                    NetworkImage('${Url_image}$image'),
                 backgroundColor: Colors.transparent,
               ),
               title: Text(
@@ -128,10 +125,15 @@ class ServiceHome extends StatelessWidget {
                     color: Colors.black54, fontWeight: FontWeight.bold),
               ),
               subtitle: Text(
-                  'ເບີໂທ: ${list[i]['phone']} | ທີ່ຢູ່: ${list[i]['address']}'),
-              trailing: Icon(Icons.keyboard_arrow_right),
+                  'ເບີໂທ: ${list[i]['phone']} |  ${list[i]['address']}'),
+              trailing: Column(
+                children: <Widget>[
+                  Text('ໄອດີ'),
+                  Text('${list[i]['id']}',style: TextStyle(fontWeight: FontWeight.bold),)
+                ],
+              ),
               onTap: () {
-                print('ສັ່ງເຄື່ອງໃຫ້ລູກຄ້າ');
+
               },
               selected: true,
             ),

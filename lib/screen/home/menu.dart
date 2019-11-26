@@ -12,9 +12,7 @@ class Menu extends StatelessWidget {
             height: 20,
           ),
           ListTile(
-            leading: Image.network(
-              'https://firebasestorage.googleapis.com/v0/b/app-yakdai.appspot.com/o/icon_menu%2Fbox1.png?alt=media&token=f4454d40-163c-4bd9-b1fe-d7d9d9af9e10',
-              width: 55,
+            leading: Image.asset('images/icon/box1.png',width: 55,
             ),
             title: Text('ເພີ່ມສີນຄ້າເຄື່ອງໃຫ້ລູກຄ້າ',style: TextStyle(color: Colors.black54,fontWeight: FontWeight.bold),),
             trailing: Icon(Icons.keyboard_arrow_right),
@@ -30,8 +28,8 @@ class Menu extends StatelessWidget {
             color: Colors.grey,
           ),
           ListTile(
-            leading: Image.network(
-                'https://firebasestorage.googleapis.com/v0/b/app-yakdai.appspot.com/o/icon_menu%2Forder.png?alt=media&token=65b3a641-7c5c-45de-9aca-9a00ff843f46'),
+            leading: Image.asset('images/icon/order.png',width: 55,
+            ),
             title: Text('ສັ່ງເຄື່ອງໃຫ້ລູກຄ້າ',style: TextStyle(color: Colors.black54,fontWeight: FontWeight.bold)),
             trailing: Icon(Icons.keyboard_arrow_right),
             onTap: () {
@@ -46,8 +44,8 @@ class Menu extends StatelessWidget {
             color: Colors.grey,
           ),
           ListTile(
-            leading: Image.network(
-                'https://firebasestorage.googleapis.com/v0/b/app-yakdai.appspot.com/o/icon_menu%2Ftracking.png?alt=media&token=39770308-7e9f-4af9-8bca-95f65e15778e'),
+            leading: Image.asset('images/icon/tracking.png',width: 55,
+            ),
             title: Text('ຕີດຕາມສີນຄ້າ',style: TextStyle(color: Colors.black54,fontWeight: FontWeight.bold)),
             trailing: Icon(Icons.keyboard_arrow_right),
             onTap: () {
@@ -62,8 +60,8 @@ class Menu extends StatelessWidget {
             color: Colors.grey,
           ),
           ListTile(
-            leading: Image.network(
-                'https://firebasestorage.googleapis.com/v0/b/app-yakdai.appspot.com/o/icon_menu%2Fdesign.png?alt=media&token=db8b115b-7541-4f64-9ada-c2e288b9b2d1'),
+            leading: Image.asset('images/icon/design.png',width: 55,
+            ),
             title: Text('ອັບເດດລະຫັດສີນຄ້າ',style: TextStyle(color: Colors.black54,fontWeight: FontWeight.bold)),
             trailing: Icon(Icons.keyboard_arrow_right),
             onTap: () {
@@ -78,8 +76,8 @@ class Menu extends StatelessWidget {
             color: Colors.grey,
           ),
           ListTile(
-            leading: Image.network(
-                'https://firebasestorage.googleapis.com/v0/b/app-yakdai.appspot.com/o/icon_menu%2Fstock.png?alt=media&token=61991f1d-2507-4027-981e-3ef9ab837544'),
+            leading: Image.asset('images/icon/stock.png',width: 55,
+            ),
             title: Text('ສີນຄ້າຮອດສາງ',style: TextStyle(color: Colors.black54,fontWeight: FontWeight.bold)),
             trailing: Icon(Icons.keyboard_arrow_right),
             onTap: () {

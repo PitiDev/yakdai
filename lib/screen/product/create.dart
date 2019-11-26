@@ -5,16 +5,12 @@ import 'package:flutter/material.dart' as prefix0;
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:async/async.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
-
-import 'package:path_provider/path_provider.dart';
-import 'package:image/image.dart' as Img;
-import 'dart:math' as Math;
 import 'package:app_yakdai/screen/product/list.dart';
+import 'package:app_yakdai/service/api.dart';
 
 class CreatePro extends StatefulWidget {
   final String title = "Upload Image Demo";
@@ -28,73 +24,40 @@ TextEditingController type_pro = new TextEditingController();
 TextEditingController number = new TextEditingController();
 TextEditingController price_old = new TextEditingController();
 TextEditingController price_sale = new TextEditingController();
+TextEditingController delivery_price = new TextEditingController();
 TextEditingController address_pro = new TextEditingController();
 TextEditingController detail = new TextEditingController();
 TextEditingController image = new TextEditingController();
 
 class _CreateProState extends State<CreatePro> {
   File _image;
-  TextEditingController cTitle = new TextEditingController();
 
-  Future getImageGallery() async {
-    var imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
-
-    final tempDir = await getTemporaryDirectory();
-    final path = tempDir.path;
-
-    int rand = new Math.Random().nextInt(100000);
-
-    Img.Image image = Img.decodeImage(imageFile.readAsBytesSync());
-    Img.Image smallerImg = image;
-
-    var compressImg = new File("$path/image_$rand.jpg")
-      ..writeAsBytesSync(Img.encodeJpg(smallerImg, quality: 85));
-
+  Future getImage() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
     setState(() {
-      _image = compressImg;
-    });
-  }
-
-  Future getImageCamera() async {
-    var imageFile = await ImagePicker.pickImage(source: ImageSource.camera);
-
-    final tempDir = await getTemporaryDirectory();
-    final path = tempDir.path;
-
-    int rand = new Math.Random().nextInt(100000);
-
-    Img.Image image = Img.decodeImage(imageFile.readAsBytesSync());
-    Img.Image smallerImg = image;
-
-    var compressImg = new File("$path/image_$rand.jpg")
-      ..writeAsBytesSync(Img.encodeJpg(smallerImg, quality: 85));
-
-    setState(() {
-      _image = compressImg;
+      _image = image;
     });
   }
 
   Future _createPro(File imageFile) async {
-    var stream =
-        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
-    var length = await imageFile.length();
-    var uri = Uri.parse("http://127.0.0.1:8000/api/create-pro");
+    final stream = http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+    final length = await imageFile.length();
+    final uri = Uri.parse(Url_CreateProduct);
 
-    var request = new http.MultipartRequest("POST", uri);
+    final request = http.MultipartRequest("POST", uri);
 
-    var multipartFile = new http.MultipartFile("image", stream, length,
-        filename: basename(imageFile.path));
-    request.fields['name'] = name.text;
+    final multipartFile = http.MultipartFile("image", stream, length, filename: basename(imageFile.path));
+    request.fields['pro_name'] = name.text;
     request.fields['type_pro'] = type_pro.text;
     request.fields['number'] = number.text;
     request.fields['price_old'] = price_old.text;
     request.fields['price_sale'] = price_sale.text;
+    request.fields['delivery_price'] = delivery_price.text;
     request.fields['address'] = address_pro.text;
     request.fields['detail'] = detail.text;
     request.files.add(multipartFile);
 
-    var response = await request.send();
-    final respStr = await response.stream.bytesToString();
+    final response = await request.send();
 
     if (response.statusCode == 200) {
       print("Success Uploaded ================");
@@ -114,9 +77,10 @@ class _CreateProState extends State<CreatePro> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GradientAppBar(
+        centerTitle: true,
         elevation: 1.0,
-        backgroundColorStart: Color(0xFF1565c0),
-        backgroundColorEnd: Color(0xFF66a6ff),
+        backgroundColorStart: Color(0xFF29b6f6),
+        backgroundColorEnd: Color(0xFF03a9f4),
         title: Text('Create Products'),
       ),
       body: NotificationListener<OverscrollIndicatorNotification>(
@@ -139,7 +103,7 @@ class _CreateProState extends State<CreatePro> {
                   height: 10,
                 ),
                 OutlineButton(
-                  onPressed: getImageGallery,
+                  onPressed: getImage,
                   child: Text('ເລືອກຮູບພາບ'),
                 ),
                 Container(
@@ -275,7 +239,7 @@ Widget _buildSignIn(BuildContext context) {
                           EdgeInsets.only(top: 20.0, left: 25.0, right: 25.0),
                       child: TextField(
                         controller: number,
-                        keyboardType: TextInputType.text,
+                        keyboardType: TextInputType.number,
                         style: TextStyle(fontSize: 16.0, color: Colors.black),
                         decoration: InputDecoration(
                           border: InputBorder.none,
@@ -298,7 +262,7 @@ Widget _buildSignIn(BuildContext context) {
                           EdgeInsets.only(top: 20.0, left: 25.0, right: 25.0),
                       child: TextField(
                         controller: price_old,
-                        keyboardType: TextInputType.text,
+                        keyboardType: TextInputType.number,
                         style: TextStyle(fontSize: 16.0, color: Colors.black),
                         decoration: InputDecoration(
                           border: InputBorder.none,
@@ -321,7 +285,7 @@ Widget _buildSignIn(BuildContext context) {
                           EdgeInsets.only(top: 20.0, left: 25.0, right: 25.0),
                       child: TextField(
                         controller: price_sale,
-                        keyboardType: TextInputType.text,
+                        keyboardType: TextInputType.number,
                         style: TextStyle(fontSize: 16.0, color: Colors.black),
                         decoration: InputDecoration(
                           border: InputBorder.none,
@@ -330,6 +294,29 @@ Widget _buildSignIn(BuildContext context) {
                             width: 30,
                           ),
                           hintText: "ລາຄາຂາຍ",
+                          hintStyle: TextStyle(fontSize: 17.0),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 250.0,
+                      height: 1.0,
+                      color: Colors.grey[400],
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsets.only(top: 20.0, left: 25.0, right: 25.0),
+                      child: TextField(
+                        controller: delivery_price,
+                        keyboardType: TextInputType.number,
+                        style: TextStyle(fontSize: 16.0, color: Colors.black),
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          icon: Image.network(
+                            'https://firebasestorage.googleapis.com/v0/b/app-yakdai.appspot.com/o/icon%2Fkip.png?alt=media&token=93adcbe0-cec0-48d4-98a2-c02f461ca8b8',
+                            width: 30,
+                          ),
+                          hintText: "ຄ່າຂົນສົ່ງຈາກຈີນ",
                           hintStyle: TextStyle(fontSize: 17.0),
                         ),
                       ),
