@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 
-
-
-class CustomDialog extends StatelessWidget {
+class CustomDialogFail extends StatelessWidget {
   final String title, description, buttonText;
   final Image image;
 
-  CustomDialog({
+  CustomDialogFail({
     @required this.title,
     @required this.description,
     @required this.buttonText,
@@ -62,7 +59,7 @@ dialogContent(BuildContext context) {
             ),
             SizedBox(height: 16.0),
             Text(
-              'ສໍາເລັດ',
+              'ບໍ່ສໍາເລັດ',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16.0,
@@ -73,7 +70,10 @@ dialogContent(BuildContext context) {
               alignment: Alignment.bottomRight,
               child: FlatButton(
                 color: Colors.blue,
-                child: Text('OK',style: TextStyle(color: Colors.white),),
+                child: Text(
+                  'OK',
+                  style: TextStyle(color: Colors.white),
+                ),
                 onPressed: () {
                   Navigator.of(context).pop(); // To close the dialog
                 },
@@ -87,8 +87,8 @@ dialogContent(BuildContext context) {
         left: Consts.padding,
         right: Consts.padding,
         child: CircleAvatar(
-          backgroundColor: Colors.greenAccent,
-          child: Image.asset('images/icon/success.png'),
+          backgroundColor: Colors.redAccent,
+          child: Image.asset('images/icon/error.png'),
           radius: Consts.avatarRadius,
         ),
       ),
@@ -98,6 +98,7 @@ dialogContent(BuildContext context) {
 
 class Consts {
   Consts._();
+
   static const double padding = 13.0;
   static const double avatarRadius = 55.0;
 }

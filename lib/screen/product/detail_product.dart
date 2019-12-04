@@ -18,6 +18,7 @@ class DetailProduct extends StatefulWidget {
   int price_old;
   int price_sale;
   int number;
+  final status;
   final create_at;
 
   DetailProduct(
@@ -26,6 +27,7 @@ class DetailProduct extends StatefulWidget {
       this.price_old,
       this.price_sale,
       this.number,
+      this.status,
       this.id,
       this.image,
       this.create_at});
@@ -75,8 +77,7 @@ class _DetailProductState extends State<DetailProduct> {
         child: ListView(
           children: <Widget>[
             Card(
-              child: Image.network(
-                  'http://192.168.43.220/yakdai_api/public/${widget.image}'),
+              child: Image.network('${Url_image}${widget.image}'),
             ),
             Container(
               margin: EdgeInsets.only(right: 10, left: 10),
@@ -200,10 +201,30 @@ class _DetailProductState extends State<DetailProduct> {
               ),
             ),
             Container(
+              margin: EdgeInsets.only(right: 10, left: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    'ສະຖານະ: ',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  Text(
+                    '${widget.status} ',
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.pinkAccent),
+                  ),
+                ],
+              ),
+            ),
+            Container(
               color: Colors.grey,
               height: 0.2,
               margin: EdgeInsets.only(right: 10, left: 10, bottom: 10, top: 5),
             ),
+
             Container(
               margin: EdgeInsets.only(right: 10, left: 10),
               child: Row(
@@ -290,8 +311,7 @@ class _DetailProductState extends State<DetailProduct> {
 //            Navigator.pop(context);
             Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(
-                  builder: (context) => ListPro()),
+              MaterialPageRoute(builder: (context) => ListPro()),
               ModalRoute.withName("/listPro"),
             );
           },

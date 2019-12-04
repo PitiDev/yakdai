@@ -125,6 +125,7 @@ class ServiceHome extends StatelessWidget {
                       price_old: list[i]['price_old'],
                       price_sale: list[i]['price_sale'],
                       number: list[i]['number'],
+                      status: list[i]['status'],
                       create_at: list[i]['create_at'],
                     ),
                   ),

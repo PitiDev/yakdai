@@ -15,7 +15,7 @@ class Menu extends StatelessWidget {
             leading: Image.asset('images/icon/box1.png',width: 55,
             ),
             title: Text('ເພີ່ມສີນຄ້າເຄື່ອງໃຫ້ລູກຄ້າ',style: TextStyle(color: Colors.black54,fontWeight: FontWeight.bold),),
-            trailing: Icon(Icons.keyboard_arrow_right),
+            trailing: Icon(Icons.keyboard_arrow_right,color: Colors.grey,),
             onTap: () {
               Navigator.pushNamed(context, '/listPro');
             },
@@ -31,7 +31,7 @@ class Menu extends StatelessWidget {
             leading: Image.asset('images/icon/order.png',width: 55,
             ),
             title: Text('ສັ່ງເຄື່ອງໃຫ້ລູກຄ້າ',style: TextStyle(color: Colors.black54,fontWeight: FontWeight.bold)),
-            trailing: Icon(Icons.keyboard_arrow_right),
+            trailing: Icon(Icons.keyboard_arrow_right,color: Colors.grey,),
             onTap: () {
               Navigator.pushNamed(context, '/listOrder');
             },
@@ -47,9 +47,9 @@ class Menu extends StatelessWidget {
             leading: Image.asset('images/icon/tracking.png',width: 55,
             ),
             title: Text('ຕີດຕາມສີນຄ້າ',style: TextStyle(color: Colors.black54,fontWeight: FontWeight.bold)),
-            trailing: Icon(Icons.keyboard_arrow_right),
+            trailing: Icon(Icons.keyboard_arrow_right,color: Colors.grey,),
             onTap: () {
-              print('horse');
+              Navigator.pushNamed(context, '/listTracking');
             },
             selected: true,
           ),
@@ -63,9 +63,9 @@ class Menu extends StatelessWidget {
             leading: Image.asset('images/icon/design.png',width: 55,
             ),
             title: Text('ອັບເດດລະຫັດສີນຄ້າ',style: TextStyle(color: Colors.black54,fontWeight: FontWeight.bold)),
-            trailing: Icon(Icons.keyboard_arrow_right),
+            trailing: Icon(Icons.keyboard_arrow_right,color: Colors.grey,),
             onTap: () {
-              print('horse');
+              Navigator.pushNamed(context, '/updatePro');
             },
             selected: true,
           ),
@@ -79,9 +79,9 @@ class Menu extends StatelessWidget {
             leading: Image.asset('images/icon/stock.png',width: 55,
             ),
             title: Text('ສີນຄ້າຮອດສາງ',style: TextStyle(color: Colors.black54,fontWeight: FontWeight.bold)),
-            trailing: Icon(Icons.keyboard_arrow_right),
+            trailing: Icon(Icons.keyboard_arrow_right,color: Colors.grey,),
             onTap: () {
-              print('horse');
+              Navigator.pushNamed(context, '/listStock');
             },
             selected: true,
           ),

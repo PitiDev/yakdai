@@ -8,6 +8,10 @@ import 'package:app_yakdai/screen/customer/create.dart';
 import 'package:app_yakdai/screen/customer/list_cus.dart';
 import 'package:app_yakdai/screen/order/createOrder.dart';
 import 'package:app_yakdai/screen/order/list_order.dart';
+import 'package:app_yakdai/screen/tracking/list_tracking.dart';
+import 'package:app_yakdai/screen/update_status/list_update_pro.dart';
+import 'package:app_yakdai/screen/stock/list_stock.dart';
+import 'package:app_yakdai/screen/update_status/edit_status.dart';
 
 void main() => runApp(MyApp());
 
@@ -32,6 +36,10 @@ class MyApp extends StatelessWidget {
         '/listCus': (_) => new listCus(),
         '/createOrder': (_) => new createOrder(),
         '/listOrder': (_) => new listOrder(),
+        '/listTracking': (_) => new ListTracking(),
+        '/updatePro': (_) => new UpdatePro(),
+        'editStatus': (_) => new EditProduct(),
+        '/listStock': (_) => new ListStock()
       },
 
       home: LoginPage(),

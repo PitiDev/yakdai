@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "997389914133",
+    "firebase_url": "https://app-yakdai.firebaseio.com",
+    "project_id": "app-yakdai",
+    "storage_bucket": "app-yakdai.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:997389914133:android:0701dfee9a255ef45b7e1c",
+        "android_client_info": {
+          "package_name": "com.pitidev.app_yakdai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "997389914133-dt96mgjt1vv4cosimajv9p49mgrqd0g3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQj8HpGv8vpMQnAaIQ_aZbgMTT5sk_tw4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "997389914133-dt96mgjt1vv4cosimajv9p49mgrqd0g3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

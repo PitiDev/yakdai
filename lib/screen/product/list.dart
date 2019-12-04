@@ -8,7 +8,6 @@ class ListPro extends StatefulWidget {
 }
 
 class _ListProState extends State<ListPro> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,11 +17,14 @@ class _ListProState extends State<ListPro> {
         backgroundColorStart: Color(0xFF29b6f6),
         backgroundColorEnd: Color(0xFF03a9f4),
         title: Text('Products'),
+        actions: <Widget>[
+
+        ],
       ),
       body: Column(
         children: <Widget>[
           SizedBox(
-            height: 20,
+            height: 10,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -38,20 +40,31 @@ class _ListProState extends State<ListPro> {
                   ),
                 ),
               ),
+
               Container(
-                margin: EdgeInsets.only(right: 20),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/createPro');
-                  },
-                  child: Row(
-                    children: <Widget>[Icon(Icons.add), Text('ເພີ່ມສີນຄ້າ',style: TextStyle(fontWeight: FontWeight.bold),)],
-                  ),
-                ),
-              )
+                margin: EdgeInsets.only(right: 10),
+                height: 40,
+                child: RaisedButton(
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(18.0),
+                        side: BorderSide(color: Colors.transparent)),
+                    color: Color(0xFF29b6f6),
+                    child: Row(
+                      children: <Widget>[
+                        Icon(Icons.add,color: Colors.white,),
+                        Text(
+                          'ເພີ່ມສີນຄ້າ',
+                          style: TextStyle(fontWeight: FontWeight.bold,color:Colors.white),
+                        )
+                      ],
+                    ),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/createPro');
+                    }),
+              ),
             ],
           ),
-
           DataList(),
         ],
       ),

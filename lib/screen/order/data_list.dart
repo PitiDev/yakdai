@@ -12,8 +12,7 @@ class OrderList extends StatefulWidget {
 
 class _OrderListState extends State<OrderList> {
   Future<List> _listPro() async {
-    final response =
-        await http.post(Url_ListOrder, body: {
+    final response = await http.post(Url_ListOrder, body: {
       "name": search.text,
     });
 
@@ -38,31 +37,31 @@ class _OrderListState extends State<OrderList> {
               );
       },
     );
-    
-  return Column(
-    children: <Widget>[
 
-      Container(
-        margin: EdgeInsets.all(10),
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
-          ),
-          elevation: 3.0,
-          child: Center(
-            child: Padding(
-              //Add padding around textfield
-              padding: EdgeInsets.symmetric(horizontal: 5.0),
-              child: TextField(
-                controller: search,
-                decoration: InputDecoration(
-                  hintText: "ຄົ້ນຫາ",
-                  border: InputBorder.none,
-                  icon: CircleAvatar(
-                    backgroundColor: Color(0xFF1565c0),
-                    child: Icon(
-                      Icons.search,
-                      color: Colors.white,
+    return Column(
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.all(10),
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            elevation: 3.0,
+            child: Center(
+              child: Padding(
+                //Add padding around textfield
+                padding: EdgeInsets.symmetric(horizontal: 5.0),
+                child: TextField(
+                  controller: search,
+                  decoration: InputDecoration(
+                    hintText: "ຄົ້ນຫາ",
+                    border: InputBorder.none,
+                    icon: CircleAvatar(
+                      backgroundColor: Color(0xFF1565c0),
+                      child: Icon(
+                        Icons.search,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
@@ -70,14 +69,13 @@ class _OrderListState extends State<OrderList> {
             ),
           ),
         ),
-      ),
-      Container(
-        height: 525,
-        margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
-        child: data_listPro,
-      ),
-    ],
-  );
+        Container(
+          height: 525,
+          margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+          child: data_listPro,
+        ),
+      ],
+    );
   }
 }
 
@@ -89,7 +87,6 @@ class ServiceHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new ListView.builder(
-//      scrollDirection: Axis.horizontal,
       itemCount: list == null ? 0 : list.length,
       itemBuilder: (context, i) {
         final image = list[i]['cus_image'];
@@ -98,8 +95,7 @@ class ServiceHome extends StatelessWidget {
             ListTile(
               leading: CircleAvatar(
                 radius: 25.0,
-                backgroundImage:
-                NetworkImage('${Url_image}$image'),
+                backgroundImage: NetworkImage('${Url_image}$image'),
                 backgroundColor: Colors.transparent,
               ),
               title: Text(
@@ -107,7 +103,10 @@ class ServiceHome extends StatelessWidget {
                 style: TextStyle(
                     color: Colors.black54, fontWeight: FontWeight.bold),
               ),
-              subtitle: Text('ວັນທີສັ່ງ: ${list[i]['date_order']}',style: TextStyle(color: Colors.pinkAccent),),
+              subtitle: Text(
+                'ວັນທີສັ່ງ: ${list[i]['date_order']}',
+                style: TextStyle(color: Colors.pinkAccent),
+              ),
               trailing: Icon(Icons.keyboard_arrow_right),
               onTap: () {
                 Navigator.of(context).push(
@@ -126,6 +125,7 @@ class ServiceHome extends StatelessWidget {
               },
               selected: true,
             ),
+            Text('ສະຖານະ: ${list[i]['status']}'),
             Container(
               margin: EdgeInsets.only(top: 5, bottom: 10),
               height: 0.2,

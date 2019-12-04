@@ -1,17 +1,12 @@
-import 'package:app_yakdai/screen/customer/create.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
-import 'package:flutter/services.dart';
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:app_yakdai/style/theme.dart' as Theme;
 import 'package:app_yakdai/service/api.dart';
 import 'package:app_yakdai/screen/order/list_order.dart';
 import 'package:intl/intl.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:app_yakdai/alert/alert.dart';
 import 'package:app_yakdai/screen/product/detail_product.dart';
 
 final formatter = new NumberFormat("#,###");
@@ -41,31 +36,64 @@ class _DetailOrderState extends State<DetailOrder> {
   String sum_price_delivery;
   int total = 0;
 
+  String StatusCode;
+
+  String _radioValue; //Initial definition of radio button value
+  String choice;
+
+  void radioButtonChanges(String value) {
+    setState(() {
+      _radioValue = value;
+      switch (value) {
+        case 'ກໍາລັງສັ່ງ':
+          choice = value;
+          break;
+        case 'ກໍາລັງຈັດຊື້':
+          choice = value;
+          break;
+        case 'ລໍຖ້າຮັບເຄື່ອງ':
+          choice = value;
+          break;
+
+        default:
+          choice = null;
+      }
+      debugPrint(choice); //Debug the choice in console
+    });
+  }
+
   Future<List> _listOrder() async {
     final response = await http.post(Url_ListOrder_Detail, body: {
       "name": widget.cus_id.toString(),
     });
 
-    print('Data Detail Order == ${response.body}');
-    print(
-        'Data Detail Order ID ============================================= ${widget.cus_id}');
-    return json.decode(response.body);
-  }
-
-  Future<List> _listOrderPrice() async {
-    final response = await http.post(Url_ListOrder_Detail_price, body: {
-      "name": widget.cus_id.toString(),
-    });
-
+    var data_order = json.decode(response.body);
+    var order_return = data_order['listOrder'];
     var sum_price = json.decode(response.body);
-    print('Data Sum Price == ${sum_price['sum_price']}');
-    print('Data Sum Price Delivery == ${sum_price['sum_price_delivery']}');
-    print('Data Sum Price Total == ${sum_price['total']}');
+    //print('Data Detail Order == ${response.body}');
+    // print('Data Detail Order ID ===================== ${widget.cus_id}');
+
     setState(() {
       sum_price_order = sum_price['sum_price'];
       sum_price_delivery = sum_price['sum_price_delivery'];
       total = sum_price['total'];
     });
+
+    return order_return;
+  }
+
+  //update Status
+  Future<List> _update_status_order() async {
+    final response = await http.post(update_status_order, body: {
+      "cus_id": widget.cus_id.toString(),
+      "status": choice.toString()
+    });
+
+    setState(() {
+      StatusCode = json.decode(response.body);
+    });
+
+    print('StatusCode === ${StatusCode}');
   }
 
   //Confrim Order Success
@@ -77,7 +105,7 @@ class _DetailOrderState extends State<DetailOrder> {
     print('Data Detail Order == ${response.body}');
     print(
         'Data Detail Order ID ============================================= ${widget.cus_id}');
-    return json.decode(response.body);
+    //return json.decode(response.body);
   }
 
   @override
@@ -111,7 +139,7 @@ class _DetailOrderState extends State<DetailOrder> {
               color: Colors.white,
             ),
             onPressed: () {
-              _listOrderPrice();
+              //_listOrderPrice();
             },
           ),
         ],
@@ -192,12 +220,34 @@ class _DetailOrderState extends State<DetailOrder> {
                   ),
                   InkWell(
                     onTap: () {
-                      _listOrderPrice();
+                      //_listOrderPrice();
                     },
-                    child: Text(
-                      'ກົດຄິດໄລ່ລາຄາ',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    child: Container(
+                      // margin: EdgeInsets.only(right: 10),
+                      height: 30,
+                      child: RaisedButton(
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(18.0),
+                              side: BorderSide(color: Colors.transparent)),
+                          color: Color(0xFF29b6f6),
+                          child: Row(
+                            children: <Widget>[
+                              Icon(
+                                Icons.cached,
+                                color: Colors.white,
+                              ),
+                              Text(
+                                'ກົດຄິດໄລ່ລາຄາ',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              )
+                            ],
+                          ),
+                          onPressed: () {
+                            _listOrder();
+                          }),
                     ),
                   ),
                 ],
@@ -271,36 +321,120 @@ class _DetailOrderState extends State<DetailOrder> {
               margin: EdgeInsets.only(right: 10, left: 10, bottom: 10, top: 5),
             ),
             Container(
-              margin: EdgeInsets.only(right: 10, left: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(left: 10),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.border_color,
-                        color: Colors.grey,
-                      ),
-                      onPressed: () {
-                        _listOrderPrice();
-                      },
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(right: 10),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.delete_forever,
-                        color: Colors.grey,
-                      ),
-                      onPressed: () {
-                        _onAlertButtonsDelete(context);
-                      },
-                    ),
-                  )
-                ],
+              margin: EdgeInsets.only(left: 20),
+              child: Text(
+                'ສະຖານະສີນຄ້າ',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
+            ),
+            Row(
+              children: <Widget>[
+                Radio(
+                  value: 'ກໍາລັງສັ່ງ',
+                  groupValue: _radioValue,
+                  onChanged: radioButtonChanges,
+                ),
+                Text(
+                  "ກໍາລັງສັ່ງ",
+                ),
+
+                Radio(
+                  value: 'ກໍາລັງຈັດຊື້',
+                  groupValue: _radioValue,
+                  onChanged: radioButtonChanges,
+                ),
+                Text(
+                  "ກໍາລັງຈັດຊື້",
+                ),
+
+                Radio(
+                  value: 'ລໍຖ້າຮັບເຄື່ອງ',
+                  groupValue: _radioValue,
+                  onChanged: radioButtonChanges,
+                ),
+                Text(
+                  "ສີນຄ້າຮອດສາງລາວ",
+                ),
+
+                //ສົ່ງເຄື່ອງສໍາເລັດ
+              ],
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 20, left: 10, right: 10),
+              height: 50,
+              child: RaisedButton(
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(18.0),
+                      side: BorderSide(color: Colors.transparent)),
+                  color: Color(0xFF29b6f6),
+                  child: Text(
+                    'ອັບເດດສະຖານະລູກຄ້າ',
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                  onPressed: () {
+                    _update_status_order();
+
+                    new Future.delayed(new Duration(seconds: 2), () {
+                      if (StatusCode == 'success') {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              content: Row(
+                                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.golf_course,
+                                    color: Colors.greenAccent,
+                                    size: 60,
+                                  ),
+                                  SizedBox(
+                                    height: 0,
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(left: 10),
+                                    child: Text("ອັບເດດສາຖານະສໍາເລັດ"),
+                                  )
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              content: Row(
+                                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.golf_course,
+                                    color: Colors.redAccent,
+                                    size: 60,
+                                  ),
+                                  SizedBox(
+                                    height: 0,
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(left: 10),
+                                    child: Text(
+                                      "!! ອັບເດດສາຖານະບໍ່ສໍາເລັດ",
+                                      style: TextStyle(color: Colors.red),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      }
+                    });
+                  }),
             ),
             Container(
               margin: EdgeInsets.only(top: 20, left: 10, right: 10),
@@ -396,7 +530,10 @@ class ServiceHome extends StatelessWidget {
               trailing: Column(
                 children: <Widget>[
                   Text('ໄອດີ'),
-                  Text('${list[i]['pro_id']}',style: TextStyle(fontWeight: FontWeight.bold),)
+                  Text(
+                    '${list[i]['pro_id']}',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )
                 ],
               ),
               onTap: () {
@@ -429,36 +566,6 @@ class ServiceHome extends StatelessWidget {
       },
     );
   }
-}
-
-//  //Alert PopUp
-_onAlertButtonsPressed(context) {
-  Alert(
-    context: context,
-    type: AlertType.warning,
-    title: "ແຈ້ງເຕືອນ",
-    desc: "ຕ້ອງການສົ່ງສິນຄ້າແທ້ບໍ",
-    buttons: [
-      DialogButton(
-        child: Text(
-          "ຍົກເລີກ",
-          style: TextStyle(color: Colors.white, fontSize: 20),
-        ),
-        onPressed: () => Navigator.pop(context),
-        color: Colors.redAccent,
-      ),
-      DialogButton(
-        child: Text(
-          "ຢືນຢັນ",
-          style: TextStyle(color: Colors.white, fontSize: 20),
-        ),
-        onPressed: () {
-          //_successOrder();
-        },
-        gradient: LinearGradient(colors: [Colors.lightBlue, Colors.blue]),
-      )
-    ],
-  ).show();
 }
 
 _onAlertButtonsDelete(context) {
